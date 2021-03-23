@@ -1,0 +1,22 @@
+- name: create the root dir
+  file:
+    state: directory
+    dest: "{{ git_repositories_root_dir }}"
+    owner: "{{ git_repositories_user }}"
+    group: "{{ git_repositories_group }}"
+    mode: 0755
+
+- name: create the repositories
+  become: yes
+  become_user: "{{ git_repositories_user }}"
+  command: git init --bare "{{ git_repositories_root_dir }}/{{ item }}"
+  args:
+    creates: "{{ git_repositories_root_dir }}/{{ item }}"
+  with_items: "{{ git_repositories }}"
+
+- name: chown the repositories
+  file:
+    dest: "{{ git_repositories_root_dir }}"
+    owner: "{{ git_repositories_user }}"
+    group: "{{ git_repositories_group }}"
+    recurse: yes

@@ -1,0 +1,17 @@
+galaxy_info:
+  author: Vincent Rischmann
+  description: Role to easily create git bare repositories on a host
+
+  license: MIT
+
+  min_ansible_version: 2.9
+
+  platforms:
+  - name: Debian
+    versions:
+    - buster
+
+  galaxy_tags:
+    - git
+
+dependencies: []
