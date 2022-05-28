@@ -1,7 +1,7 @@
 - name: install acl
   package:
     name: acl
-    state: installed
+    state: present
 
 - name: create the root dir
   file:
