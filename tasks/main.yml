@@ -11,7 +11,9 @@
     group: "{{ git_repositories_group }}"
     mode: 0755
 
-- name: create the repositories
+  # NOTE(vincent): can't use the git module to do this !
+
+- name: create the repositories # noqa command-instead-of-module
   become: yes
   become_user: "{{ git_repositories_user }}"
   command: git init --bare "{{ git_repositories_root_dir }}/{{ item }}"
