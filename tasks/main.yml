@@ -1,29 +1,29 @@
-- name: install acl
-  package:
+- name: Install the acl package
+  ansible.builtin.package:
     name: acl
     state: present
 
-- name: create the root dir
-  file:
+- name: Create the root dir
+  ansible.builtin.file:
     state: directory
     dest: "{{ git_repositories_root_dir }}"
     owner: "{{ git_repositories_user }}"
     group: "{{ git_repositories_group }}"
-    mode: 0755
+    mode: "0755"
 
   # NOTE(vincent): can't use the git module to do this !
 
-- name: create the repositories # noqa command-instead-of-module
-  become: yes
+- name: Create the repositories # noqa command-instead-of-module
+  become: true
   become_user: "{{ git_repositories_user }}"
-  command: git init --bare "{{ git_repositories_root_dir }}/{{ item }}"
-  args:
+  ansible.builtin.command:
+    cmd: git init --bare "{{ git_repositories_root_dir }}/{{ item }}"
     creates: "{{ git_repositories_root_dir }}/{{ item }}"
   with_items: "{{ git_repositories }}"
 
-- name: chown the repositories
-  file:
+- name: Change owner of the repositories
+  ansible.builtin.file:
     dest: "{{ git_repositories_root_dir }}"
     owner: "{{ git_repositories_user }}"
     group: "{{ git_repositories_group }}"
-    recurse: yes
+    recurse: true
