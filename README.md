@@ -2,9 +2,12 @@
 
 Easily create git bare repositories on a host.
 
+This role is available on Ansible Galaxy as `vrischmann.gitrepos`.
+
 # Requirements
 
-Git installed on the host.
+- Git installed on the host
+- The `acl` package will be installed by this role
 
 # Role Variables
 
@@ -23,6 +26,21 @@ A repository definition contains only the name at the moment:
 git_repositories:
 - foo
 - bar
+```
+
+# Example Playbook
+
+```yaml
+- hosts: git-server
+  roles:
+    - role: vrischmann.gitrepos
+      vars:
+        git_repositories_root_dir: /srv/git
+        git_repositories_user: git
+        git_repositories_group: git
+        git_repositories:
+          - myproject
+          - another-project
 ```
 
 # License
